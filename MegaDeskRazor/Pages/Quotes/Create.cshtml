@@ -14,29 +14,33 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="DeskQuote.DeskId" class="control-label"></label>
-                <select asp-for="DeskQuote.DeskId" class ="form-control" asp-items="ViewBag.DeskId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="DeskQuote.CustomerName" class="control-label"></label>
-                <input asp-for="DeskQuote.CustomerName" class="form-control" />
+                <input asp-for="DeskQuote.CustomerName" class="form-control" required/>
                 <span asp-validation-for="DeskQuote.CustomerName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DeskQuote.QuoteDate" class="control-label"></label>
-                <input asp-for="DeskQuote.QuoteDate" class="form-control" />
-                <span asp-validation-for="DeskQuote.QuoteDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="DeskQuote.DeliveryTypeId" class="control-label"></label>
-                <select asp-for="DeskQuote.DeliveryTypeId" class="form-control" asp-items="ViewBag.DeliveryTypeId">
+                <select asp-for="DeskQuote.DeliveryTypeId" class="form-control" asp-items="ViewBag.DeliveryTypeId" required>
                     <option value="">-- Select Delivery Type --</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="DeskQuote.QuotePrice" class="control-label"></label>
-                <input asp-for="DeskQuote.QuotePrice" class="form-control" />
-                <span asp-validation-for="DeskQuote.QuotePrice" class="text-danger"></span>
+                <label asp-for="Desk.Width" class="control-label"></label>
+                <input asp-for="Desk.Width" class="form-control" type="number" min="24" max="96" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Desk.Depth" class="control-label"></label>
+                <input asp-for="Desk.Depth" class="form-control" type="number" min="12" max="48" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Desk.NumDrawers" class="control-label"></label>
+                <input asp-for="Desk.NumDrawers" class="form-control" type="number" min="0" max="7" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Desk.DesktopMaterialId" class="control-label"></label>
+                <select asp-for="Desk.DesktopMaterialId" class="form-control" asp-items="ViewBag.DesktopMaterialId" required>
+                    <option value="">-- Select Desktop Material --</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -6,7 +6,7 @@ namespace MegaDeskRazor.Models
     {
         public int DeliveryTypeId { get; set; }
 
-        public string? DeliveryName { get; set; }
+        public string DeliveryName { get; set; }
 
         public decimal PriceUnder1000 { get; set; }
 

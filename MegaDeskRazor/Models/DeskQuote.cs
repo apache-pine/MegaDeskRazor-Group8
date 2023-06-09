@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System;
-using System.Linq;
+using MegaDeskRazor.Data;
 
 namespace MegaDeskRazor.Models
 {
@@ -22,13 +21,13 @@ namespace MegaDeskRazor.Models
         public string? CustomerName { get; set; }
 
         [Display(Name = "Quote Date")]
-        public DateTime QuoteDate { get; set; } = DateTime.Now;
+        public DateTime QuoteDate { get; set; }
 
         [Display(Name = "Delivery Type")]
         public int DeliveryTypeId { get; set; }
 
         [Display(Name = "Quote Price")]
-        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal QuotePrice { get; set; }
 
         // Navigation Properties
@@ -38,7 +37,7 @@ namespace MegaDeskRazor.Models
         public DeliveryType DeliveryType { get; set; }
 
         // Methods
-/*        public decimal GetQuotePrice(MegaDeskRazor.Data.MegaDeskRazorContext context)
+        public decimal GetQuotePrice(MegaDeskRazorContext context)
         {
             decimal quotePrice = BASE_DESK_PRICE;
             decimal surfaceArea = this.Desk.Depth * this.Desk.Width;
@@ -59,7 +58,7 @@ namespace MegaDeskRazor.Models
 
             decimal shippingPrice = 0.00M;
 
-            var shippingPrices = context.Delivery.Where(d => d.DeliveryId == this.DeliveryTypeId).FirstOrDefault();
+            var shippingPrices = context.DeliveryType.Where(d => d.DeliveryTypeId == this.DeliveryTypeId).FirstOrDefault();
 
             if (surfaceArea < 1000)
             {
@@ -76,6 +75,6 @@ namespace MegaDeskRazor.Models
 
             quotePrice = quotePrice + surfacePrice + drawerPrice + materialPrice + shippingPrice;
             return quotePrice;
-        }*/
+        }
     }
 }

@@ -19,23 +19,22 @@ namespace MegaDeskRazor.Pages.Quotes
             _context = context;
         }
 
-      public DeskQuote DeskQuote { get; set; } = default!; 
+        public DeskQuote DeskQuote { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.DeskQuote == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var deskquote = await _context.DeskQuote.FirstOrDefaultAsync(m => m.DeskQuoteId == id);
-            if (deskquote == null)
+            DeskQuote = await _context.DeskQuote
+                .Include(d => d.DeliveryType)
+                .Include(d => d.Desk).FirstOrDefaultAsync(m => m.DeskQuoteId == id);
+            
+            if (DeskQuote == null)
             {
                 return NotFound();
-            }
-            else 
-            {
-                DeskQuote = deskquote;
             }
             return Page();
         }
