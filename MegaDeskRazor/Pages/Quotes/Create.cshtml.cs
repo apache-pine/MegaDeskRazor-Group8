@@ -37,21 +37,14 @@ namespace MegaDeskRazor.Pages.Quotes
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                ViewData["DeliveryTypeId"] = new SelectList(_context.Set<DeliveryType>(), "DeliveryTypeId", "DeliveryName");
-                ViewData["DesktopMaterialId"] = new SelectList(_context.Set<DesktopMaterial>(), "DesktopMaterialId", "DesktopMaterialName");
-                return Page();
-            }
-
             _context.Desk.Add(Desk);
             await _context.SaveChangesAsync();
+
+            DeskQuote.QuoteDate = DateTime.Now;
 
             DeskQuote.DeskId = Desk.DeskId;
 
             DeskQuote.Desk = Desk;
-
-            DeskQuote.QuoteDate = DateTime.Now;
 
             DeskQuote.QuotePrice = DeskQuote.GetQuotePrice(_context);
 

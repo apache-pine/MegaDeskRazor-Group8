@@ -13,22 +13,21 @@ namespace MegaDeskRazor.Models
         // Properties
         public int DeskQuoteId { get; set; }
 
-        public int DeskId { get; set; }
-
         [Display(Name = "Customer Name")]
         [StringLength(60, MinimumLength = 3)]
-        [Required]
-        public string? CustomerName { get; set; }
+        public string CustomerName { get; set; }
 
         [Display(Name = "Quote Date")]
         public DateTime QuoteDate { get; set; }
 
-        [Display(Name = "Delivery Type")]
-        public int DeliveryTypeId { get; set; }
-
         [Display(Name = "Quote Price")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal QuotePrice { get; set; }
+
+        [Display(Name = "Delivery Type")]
+        public int DeliveryTypeId { get; set; }
+
+        public int DeskId { get; set; }
 
         // Navigation Properties
         public Desk Desk { get; set; }

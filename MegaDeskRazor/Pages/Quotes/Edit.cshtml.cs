@@ -21,23 +21,34 @@ namespace MegaDeskRazor.Pages.Quotes
         }
 
         [BindProperty]
-        public DeskQuote DeskQuote { get; set; } = default!;
+        public Desk Desk { get; set; }
+
+        [BindProperty]
+        public DeskQuote DeskQuote { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.DeskQuote == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var deskquote =  await _context.DeskQuote.FirstOrDefaultAsync(m => m.DeskQuoteId == id);
-            if (deskquote == null)
+            DeskQuote = await _context.DeskQuote
+                .Include(d => d.Desk)
+                    .ThenInclude(d => d.DesktopMaterial)
+                .Include(d => d.DeliveryType)
+                .FirstOrDefaultAsync(m => m.DeskQuoteId == id);
+
+            if (DeskQuote == null)
             {
                 return NotFound();
             }
-            DeskQuote = deskquote;
-           ViewData["DeliveryTypeId"] = new SelectList(_context.DeliveryType, "DeliveryTypeId", "DeliveryTypeId");
-           ViewData["DeskId"] = new SelectList(_context.Desk, "DeskId", "DeskId");
+
+            Desk = DeskQuote.Desk;
+
+            ViewData["DeliveryTypeId"] = new SelectList(_context.Set<DeliveryType>(), "DeliveryTypeId", "DeliveryName");
+            ViewData["DesktopMaterialId"] = new SelectList(_context.Set<DesktopMaterial>(), "DesktopMaterialId", "DesktopMaterialName");
+
             return Page();
         }
 
@@ -45,10 +56,16 @@ namespace MegaDeskRazor.Pages.Quotes
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            _context.Desk.Add(Desk);
+            await _context.SaveChangesAsync();
+
+            DeskQuote.QuoteDate = DateTime.Now;
+
+            DeskQuote.DeskId = Desk.DeskId;
+
+            DeskQuote.Desk = Desk;
+
+            DeskQuote.QuotePrice = DeskQuote.GetQuotePrice(_context);
 
             _context.Attach(DeskQuote).State = EntityState.Modified;
 

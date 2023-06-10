@@ -20,24 +20,27 @@ namespace MegaDeskRazor.Pages.Quotes
         }
 
         [BindProperty]
-      public DeskQuote DeskQuote { get; set; } = default!;
+        public DeskQuote DeskQuote { get; set; }
+
+        [BindProperty]
+        public Desk Desk { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.DeskQuote == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var deskquote = await _context.DeskQuote.FirstOrDefaultAsync(m => m.DeskQuoteId == id);
+            DeskQuote = await _context.DeskQuote
+                .Include(dq => dq.Desk)
+                    .ThenInclude(d => d.DesktopMaterial)
+                .Include(dq => dq.DeliveryType)
+                .FirstOrDefaultAsync(m => m.DeskQuoteId == id);
 
-            if (deskquote == null)
+            if (DeskQuote == null)
             {
                 return NotFound();
-            }
-            else 
-            {
-                DeskQuote = deskquote;
             }
             return Page();
         }
