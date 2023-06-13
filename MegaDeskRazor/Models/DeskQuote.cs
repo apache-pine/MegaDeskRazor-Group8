@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MegaDeskRazor.Data;
 
 namespace MegaDeskRazor.Models
@@ -14,17 +15,17 @@ namespace MegaDeskRazor.Models
         public int DeskQuoteId { get; set; }
 
         [Display(Name = "Customer Name")]
-        [StringLength(60, MinimumLength = 3)]
-        public string CustomerName { get; set; }
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "Customer Name must be between 3 and 60 characters.")]
+        public string CustomerName { get; set; } = string.Empty;
 
-        [Display(Name = "Quote Date")]
-        public DateTime QuoteDate { get; set; }
+        [Display(Name = "Quote Date"), DataType(DataType.Date)]
+        public DateTime QuoteDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Quote Price")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal QuotePrice { get; set; }
 
-        [Display(Name = "Delivery Type")]
+        [Display(Name = "Delivery Type"), Required(ErrorMessage = "Please select a delivery type.")]
         public int DeliveryTypeId { get; set; }
 
         public int DeskId { get; set; }

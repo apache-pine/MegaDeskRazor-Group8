@@ -11,10 +11,10 @@
     <h4>DeskQuote</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 first-child">
             @Html.DisplayNameFor(model => model.DeskQuote.CustomerName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 first-child">
             @Html.DisplayFor(model => model.DeskQuote.CustomerName)
         </dd>
         <dt class="col-sm-2">
@@ -53,15 +53,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DeskQuote.Desk.DesktopMaterial.DesktopMaterialName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 last-child">
             @Html.DisplayNameFor(model => model.DeskQuote.DeliveryType)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 last-child">
             @Html.DisplayFor(model => model.DeskQuote.DeliveryType.DeliveryName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.DeskQuote?.DeskQuoteId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-hover" asp-page="./Edit" asp-route-id="@Model.DeskQuote?.DeskQuoteId">Edit</a> |
+    <a class="btn btn-override" asp-page="./Index">Back to List</a>
 </div>

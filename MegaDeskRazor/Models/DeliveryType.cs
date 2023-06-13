@@ -6,6 +6,7 @@ namespace MegaDeskRazor.Models
     {
         public int DeliveryTypeId { get; set; }
 
+        [Display(Name = "Delivery Time")]
         public string DeliveryName { get; set; }
 
         public decimal PriceUnder1000 { get; set; }
